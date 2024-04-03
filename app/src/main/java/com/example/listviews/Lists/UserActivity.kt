@@ -1,7 +1,8 @@
-package com.example.listviews
+package com.example.listviews.Lists
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.listviews.R
 import com.example.listviews.databinding.ActivityUserBinding
 
 class UserActivity : AppCompatActivity() {
@@ -12,7 +13,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val name=intent.getStringExtra("name")
-        val imageId=intent.getIntExtra("imageId",R.drawable.person1)
+        val imageId=intent.getIntExtra("imageId", R.drawable.person1)
         val mssg=intent.getStringExtra("mesage")
 
         binding.imageView.setImageResource(imageId)
