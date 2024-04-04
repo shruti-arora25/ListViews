@@ -32,7 +32,7 @@ class MainActivityWM : AppCompatActivity() {
             }
 
             btn2.setOnClickListener {
-                myPeriodicWork()
+              //  myPeriodicWork()
             }
         }
     }
@@ -58,6 +58,7 @@ class MainActivityWM : AppCompatActivity() {
         val constraints = androidx.work.Constraints.Builder()
             .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
             .setRequiresCharging(true)
+
             .build()
 
         val myWorkRequest = PeriodicWorkRequest.Builder(MyWorker::class.java, 15, TimeUnit.MINUTES)

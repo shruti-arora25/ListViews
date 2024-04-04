@@ -15,9 +15,17 @@ class newtask : BottomSheetDialogFragment() {
     private lateinit var taskVM: TaskVM
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val activity = requireActivity()
+
+        taskVM=ViewModelProvider(activity).get(TaskVM::class.java)
+
+        binding.saveBtn.setOnClickListener {
+            saveAction()
+        }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,15 +34,10 @@ class newtask : BottomSheetDialogFragment() {
 
         binding = FragmentNewtaskBinding.inflate(inflater, container, false)
         return binding.root
+
+
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        taskVM = ViewModelProvider(requireActivity()).get(taskVM::class.java)
-        binding.saveBtn.setOnClickListener {
-            saveAction()
-        }
-    }
 
     private fun saveAction() {
         taskVM.name.value = binding.name.text.toString()
