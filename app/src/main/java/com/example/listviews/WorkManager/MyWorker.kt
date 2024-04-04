@@ -28,7 +28,6 @@ class MyWorker(context:Context, workerParameters: WorkerParameters):Worker(conte
 
         showNtfcn()
         return Result.success()
-
     }
 
     @SuppressLint("MissingPermission")
@@ -39,7 +38,6 @@ class MyWorker(context:Context, workerParameters: WorkerParameters):Worker(conte
 
         val intent=Intent(applicationContext,MainActivityWM::class.java).apply {
             flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
         }
 
         var pendingIntent=PendingIntent.getActivity(applicationContext,0,intent,
@@ -50,6 +48,7 @@ class MyWorker(context:Context, workerParameters: WorkerParameters):Worker(conte
             .setContentTitle("New Task Title")
             .setContentText("SubContent")
             .setPriority(Notification.PRIORITY_MAX)
+            .setOngoing(true)  //if user can't dismiss the notification
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
@@ -68,17 +67,8 @@ class MyWorker(context:Context, workerParameters: WorkerParameters):Worker(conte
 
         }
 
-
         with(NotificationManagerCompat.from(applicationContext)){
             notify(NOTIFICATION, ntfcn.build())
-
-
-
         }
-
-
-
     }
-
-
 }

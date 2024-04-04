@@ -7,6 +7,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
@@ -27,21 +28,14 @@ class MainActivityWM : AppCompatActivity() {
         bind.apply {
 
             btn1.setOnClickListener {
-
                 myOneTimeWork()
             }
 
-
-
             btn2.setOnClickListener {
-
                 myPeriodicWork()
-
             }
         }
-
     }
-
 
     fun myOneTimeWork() {
 
@@ -55,7 +49,6 @@ class MainActivityWM : AppCompatActivity() {
             .setConstraints(constraints)
             .build()
 
-
         WorkManager.getInstance(this).enqueue(myWorkRequest)
 
     }
@@ -63,8 +56,8 @@ class MainActivityWM : AppCompatActivity() {
     fun myPeriodicWork() {
 
         val constraints = androidx.work.Constraints.Builder()
-
             .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+            .setRequiresCharging(true)
             .build()
 
         val myWorkRequest = PeriodicWorkRequest.Builder(MyWorker::class.java, 15, TimeUnit.MINUTES)
@@ -72,9 +65,9 @@ class MainActivityWM : AppCompatActivity() {
             .addTag("TAG")
             .build()
 
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork("my_name",ExistingPeriodicWorkPolicy.KEEP,myWorkRequest)
+        WorkManager.getInstance(this)
+            .enqueueUniquePeriodicWork("my_name", ExistingPeriodicWorkPolicy.KEEP, myWorkRequest)
 
     }
-
 
 }
